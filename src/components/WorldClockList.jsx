@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import WorldClock from './WorldClock';
 
-const WorldClockList = ({ clocks, onRemove }) => {
+const WorldClockList = ({ clocks, onRemove, displayMode }) => {
   return (
-    <div className="clock-list">
+    <div className="clock-grid">
       {clocks.map((clock) => (
         <WorldClock
           key={clock.id}
@@ -12,6 +12,7 @@ const WorldClockList = ({ clocks, onRemove }) => {
           name={clock.name}
           offset={clock.offset}
           onRemove={onRemove}
+          displayMode={displayMode}
         />
       ))}
     </div>
@@ -27,6 +28,7 @@ WorldClockList.propTypes = {
     })
   ).isRequired,
   onRemove: PropTypes.func.isRequired,
+  displayMode: PropTypes.oneOf(['digital', 'analog']).isRequired,
 };
 
 export default WorldClockList;

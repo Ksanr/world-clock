@@ -8,41 +8,52 @@ class App extends Component {
     super(props);
     this.state = {
       clocks: [
-        // Для примера
         { id: 1, name: 'Москва', offset: 3 },
         { id: 2, name: 'Нью-Йорк', offset: -5 },
         { id: 3, name: 'Токио', offset: 9 },
       ],
+      displayMode: 'digital', // 'digital' или 'analog'
     };
   }
 
-  // Добавление новых часов
   handleAddClock = (name, offset) => {
-    const newClock = {
-      id: Date.now(),
-      name,
-      offset,
-    };
-    this.setState((prevState) => ({
-      clocks: [...prevState.clocks, newClock],
+    const newClock = { id: Date.now(), name, offset };
+    this.setState((prev) => ({
+      clocks: [...prev.clocks, newClock],
     }));
   };
 
-  // Удаление часов по id
   handleRemoveClock = (id) => {
-    this.setState((prevState) => ({
-      clocks: prevState.clocks.filter((clock) => clock.id !== id),
+    this.setState((prev) => ({
+      clocks: prev.clocks.filter((clock) => clock.id !== id),
+    }));
+  };
+
+  toggleDisplayMode = () => {
+    this.setState((prev) => ({
+      displayMode: prev.displayMode === 'digital' ? 'analog' : 'digital',
     }));
   };
 
   render() {
-    const { clocks } = this.state;
+    const { clocks, displayMode } = this.state;
 
     return (
       <div className="app">
-        <h1>Мировые часы</h1>
+        <div className="header">
+          <h1 className="app-title">Мировые часы</h1>
+          <button className="btn-primary" onClick={this.toggleDisplayMode}>
+            {displayMode === 'digital' ? 'Аналоговые часы' : 'Цифровые часы'}
+          </button>
+        </div>
+
         <WorldClockForm onAdd={this.handleAddClock} />
-        <WorldClockList clocks={clocks} onRemove={this.handleRemoveClock} />
+
+        <WorldClockList
+          clocks={clocks}
+          onRemove={this.handleRemoveClock}
+          displayMode={displayMode}
+        />
       </div>
     );
   }

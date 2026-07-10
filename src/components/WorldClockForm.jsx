@@ -50,7 +50,7 @@ const WorldClockForm = ({ onAdd }) => {
           required
         />
       </div>
-      <button type="submit">Добавить</button>
+      <button type="submit" className="btn-primary">Добавить</button>
     </form>
   );
 };
